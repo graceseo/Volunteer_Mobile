@@ -2,7 +2,7 @@
 * File Name: gsDatabase.js
 
 * Revision History:
-*        Gyeonglim Seo, 2019-03-26 : Created
+*        Gyeonglim Seo, 2019-04-11 : Created
 */
 var db;
 
@@ -14,9 +14,9 @@ function errorHandler(tx, error) {
  * For creating database
  */
 function gsCreateDatabase(){
-    var shortName="FeedbackDB";
+    var shortName="VolunteerDB";
     var version="1.0";
-    var displayName="DB for FeedbackDB app";
+    var displayName="DB for VolunteerDB app";
     var dbSize=2*1024*1024;
 
     console.info("Creating database...");

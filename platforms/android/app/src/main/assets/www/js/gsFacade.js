@@ -2,7 +2,7 @@
  * File Name: gsFacade.js
 
  * Revision History:
- *        Gyeonglim Seo, 2019-03-10 : Created
+ *        Gyeonglim Seo, 2019-04-11 : Created
  */
 
 /**

@@ -1,8 +1,8 @@
 /**
- * File Name: gsfeedbackDAL.js
+ * File Name: gsVolunteerDAL.js
  *
  * Revision History:
- *       Gyeonglim Seo, 2019-03-28 : Created
+ *       Gyeonglim Seo, 2019-04-11 : Created
  */
 
 var Review={

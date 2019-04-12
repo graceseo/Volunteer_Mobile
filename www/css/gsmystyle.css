@@ -7,3 +7,16 @@ select.error,
 textarea.error {
     border: 1px red solid;
 }
+
+.icon_image{
+    width: 20px;
+    height: 20px;
+}
+.headerClass{
+    background-color: #ffffff;
+}
+.main_image{
+    width: 100%;
+    height: 150px;
+    border-radius: 15px 50px 30px;
+}
