@@ -51,7 +51,7 @@ function gsCreateTables() {
                         "INSERT INTO Category (name, image) VALUES('Children','img/children.png')",
                         "INSERT INTO Category (name, image) VALUES('Food','img/food.png')",
                         "INSERT INTO Category (name, image) VALUES('Arts','img/arts.png')",
-                        "INSERT INTO Category (name, image) VALUES('Driver','img/car.png')",
+                        "INSERT INTO Category (name, image) VALUES('Drive','img/car.png')",
                         "INSERT INTO Category (name, image) VALUES('Technology','img/technology.png')"];
 
         for(var i=0; i<insertSql.length; i++){
@@ -60,6 +60,8 @@ function gsCreateTables() {
 
         var creatVolunteerSql="CREATE TABLE IF NOT EXISTS volunteer("+
             "volunteer_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"+
+            "loginID varchar(20),"+
+            "password varchar(20),"+
             "first_name VARCHAR(20) NOT NULL,"+
             "last_name VARCHAR(20) NOT NULL,"+
             "phone VARCHAR(10) NOT NULL,"+

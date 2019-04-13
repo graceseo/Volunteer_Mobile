@@ -6,7 +6,6 @@
 */
 
 function gsHomePage_Show() {
-    // gsGetlNewOrgz();
     // gsGetRecentWanted();
 }
 
@@ -14,9 +13,24 @@ function gsExplorePage_show() {
     gsGetCategory();
 }
 
+function gsBtnLogin_click() {
+    gsCheckId();
+}
+
+function gsBtnSignup_click() {
+    $(location).prop('href', '#gsVolunteerSignPage');
+}
+
+function gsBtnVolJoinSave_click() {
+
+}
+
 function init() {
     $("#gsHomePage").on("pageshow", gsHomePage_Show);
     $("#gsExplorePage").on("pageshow", gsExplorePage_show);
+    $("#gsBtnLogin").on("click",gsBtnLogin_click);
+    $("#gsBtnSignUp").on("click", gsBtnSignup_click);
+    $("#gsBtnVolJoinSave").on("click", gsBtnVolJoinSave_click);
 }
 
 function initDB() {

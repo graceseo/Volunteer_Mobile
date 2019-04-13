@@ -81,3 +81,28 @@ var Category={
         db.transaction(txFunction, errorHandler, successTransaction);
     }
 };
+
+var Volunteer={
+    select: function (options, callback) {
+        function txFunction(tx) {
+            var sql = "SELECT * FROM volunteer WHERE loginID=? and password=?;";
+            tx.executeSql(sql, options, callback, errorHandler);
+        }
+
+        function successTransaction() {
+            console.info("Select transaction is successful");
+        }
+        db.transaction(txFunction, errorHandler, successTransaction);
+    },
+    insert: function (options, callback) {
+        function txFunction(tx) {
+            var sql="INSERT INTO review (loginID, password, first_name, last_name, phone, email)"+
+                " values(?,?,?,?,?,?);";
+            tx.executeSql(sql,options, callback,errorHandler);
+        }
+        function successTransaction() {
+            console.info("Insert transaction is successful");
+        }
+        db.transaction(txFunction, errorHandler, successTransaction);
+    }
+};

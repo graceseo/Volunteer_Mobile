@@ -103,7 +103,28 @@ function gsGetCategory() {
         }
 
         $("#gsExploreList a").on("click", clickHandler);
-
     }
     Category.selectAll(options, callback);
+}
+
+function gsCheckId() {
+    var opt;
+    var id=$("#gsLoginID").val();
+    var pwd=$("#gsLoginPwd").val();
+    opt=[id, pwd];
+
+    function callback(tx, results) {
+        var htmlCode="";
+        if (results.rows.length!==null || results.rows.length!==0) {
+            var row=results.rows[1]
+            htmlCode += "<h1>"+row['first_name']+"!</h1>" ;
+        }
+        var lv = $("#gsExploreHeader");
+
+        lv.html(htmlCode);
+    }
+    Volunteer.select(opt, callback);
+}
+function gsAddVolunteer() {
+
 }

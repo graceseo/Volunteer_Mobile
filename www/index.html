@@ -26,6 +26,7 @@
 
         <title>Hello World</title>
     </head>
+
     <body >
     <!-- Home Page-->
     <div id="gsHomePage" data-role="page" style="background-color: white" >
@@ -34,10 +35,10 @@
         </header>
         <section data-role="content" style="background-color: white" >
             <h3>Become a volunteer</h3>
-            <img src="img/getInvolved.png" class="main_image"><br/><br/>
+            <a href="#gsVolunteerLoginPage"><img src="img/getInvolved.png" class="main_image" alt="loginPage"></a><br/><br/>
 
-            <h3>Membership for Organization</h3>
-            <img src="img/volunteer_back.jpg" class="main_image">
+            <h3>Need a volunteer?</h3>
+            <a href="#gsVolunteerSignPage"><img src="img/volunteer_back.jpg" class="main_image" alt="signPage"></a><br/><br/>
 
             <h3>Recently Updated</h3>
         </section>
@@ -45,19 +46,109 @@
             <div data-role="navbar" style="background-color: white">
                 <ul>
                     <li><a href="#gsHomePage" style="background-color: #ffcccc; color:black;">
-                        <img class="icon_image" src="img/house-outline.png" ><br/>Home</a>
+                        <img class="icon_image" src="img/house-outline.png" alt="home" ><br/>Home</a>
                     </li>
                     <li><a href="#gsExplorePage" data-theme="a">
-                        <img class="icon_image" src="img/search.png" ><br/>Explore</a>
+                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
                     </li>
                     <li><a href="#gsWantedPage"  data-theme="a">
-                        <img class="icon_image" src="img/needed.png" ><br/>wanted</a>
-                    </li>
-                    <li><a href="#gsProfilePage"  data-theme="a">
-                        <img class="icon_image" src="img/profile.png" ><br/>Profile </a>
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Wanted</a>
                     </li>
                     <li><a href="#gsAboutPage" data-theme="a">
-                        <img class="icon_image" src="img/about.png" ><br/>About </a>
+                        <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Volunteer Login -->
+    <div id="gsVolunteerLoginPage" data-role="page" style="background-color: white" >
+        <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
+            <h1 >Volunteer Login</h1>
+        </header>
+        <section data-role="content" style="background-color: white" >
+            <form id="gsFrmLogin" name="gsFrmLogin">
+                <label for="gsLoginID">ID</label>
+                <input type="text" name="gsLoginID" id="gsLoginID"><br/>
+                <label for="gsLoginPwd">Password</label>
+                <input type="password" name="gsLoginPwd" id="gsLoginPwd">
+
+                <button type="button" id="gsBtnLogin" name="gsBtnLogin"
+                        style="background-color: #ffcccc; color: black; width: 100px" >
+                    Log in</button>
+                <br/>
+                <h3>Are you not a member? Plase join us</h3>
+                <button type="button" id="gsBtnSignUp" name="gsBtnSignUp"
+                        style="background-color: #ffcccc; color: black;" >
+                    Sign up</button>
+            </form>
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed" >
+            <div data-role="navbar" style="background-color: white">
+                <ul>
+                    <li><a href="#gsHomePage" style="background-color: #ffcccc; color:black;">
+                        <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
+                    </li>
+                    <li><a href="#gsExplorePage" data-theme="a">
+                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
+                    </li>
+                    <li><a href="#gsWantedPage"  data-theme="a">
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Wanted</a>
+                    </li>
+                    <li><a href="#gsAboutPage" data-theme="a">
+                        <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Volunteer Signup -->
+    <div id="gsVolunteerSignPage" data-role="page">
+        <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
+            <h1>Sign up</h1>
+        </header>
+        <section data-role="content" >
+            <form id="gsFrmJoinVolunteer" name="gsFrmJoinVolunteer">
+
+                <label for="gsLoginIDVolJoin">ID: </label>
+                <input type="text" name="gsLoginIDVolJoin" id="gsLoginIDVolJoin"><br/>
+
+                <label for="gsLoginPwdVolJoin">Password: </label>
+                <input type="password" name="gsLoginPwdVolJoin" id="gsLoginPwdVolJoin">
+
+                <label for="gsFirstNameVolJoin">First Name:</label>
+                <input type="text" name="gsFirstNameVolJoin" id="gsFirstNameVolJoin">
+
+                <label for="gsLastNameVolJoin">Last Name:</label>
+                <input type="text" name="gsLastNameVolJoin" id="gsLastNameVolJoin">
+
+                <label for="gsPhoneVolJoin">Phone:</label>
+                <input type="text" name="gsPhoneVolJoin" id="gsPhoneVolJoin">
+
+                <label for="gsEmailVolJoin">Email:</label>
+                <input type="text" name="gsEmailVolJoin" id="gsEmailVolJoin">
+
+                <button type="button" id="gsBtnVolJoinSave" name="gsBtnSaveVolJoin"
+                        style="background-color: #ffcccc; color: white; width: 80px" >
+                    Save</button>
+            </form>
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed" >
+            <div data-role="navbar" style="background-color: white">
+                <ul>
+                    <li><a href="#gsHomePage" style="background-color: #ffcccc; color:black;">
+                        <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
+                    </li>
+                    <li><a href="#gsExplorePage" data-theme="a">
+                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
+                    </li>
+                    <li><a href="#gsWantedPage"  data-theme="a">
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Wanted</a>
+                    </li>
+                    <li><a href="#gsAboutPage" data-theme="a">
+                        <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
                     </li>
                 </ul>
             </div>
@@ -67,39 +158,35 @@
     <!-- Explore Page -->
     <div id="gsExplorePage" data-role="page">
         <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
-            <h1 >Explore Volunteer Oppotunities</h1>
+            <h1 >Explore Opportunity</h1>
         </header>
         <section data-role="content" >
             <form id="gsFrmExplore" name="gsFrmExplore">
-                <section data-role="content">
-                    <ul id="gsExploreList" data-role="listview" data-inset="true" data-icon="">
-                    </ul>
-                </section>
+                <ul id="gsExploreList" data-role="listview" data-inset="true" data-icon="">
+                </ul>
             </form>
         </section>
         <footer data-role="footer" data-theme="b" data-position="fixed" >
             <div data-role="navbar" style="background-color: white">
                 <ul>
                     <li><a href="#gsHomePage" data-theme="a">
-                        <img class="icon_image" src="img/house-outline.png" ><br/>Home</a>
+                        <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
                     </li>
                     <li><a href="#gsExplorePage" style="background-color: #ffcccc; color:black;">
-                        <img class="icon_image" src="img/search.png" ><br/>Explore</a>
+                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
                     </li>
                     <li><a href="#gsWantedPage"  data-theme="a">
-                        <img class="icon_image" src="img/needed.png" ><br/>wanted</a>
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Wanted</a>
                     </li>
-                    <li><a href="#gsProfilePage"  data-theme="a">
-                        <img class="icon_image" src="img/profile.png" ><br/> Profile </a></li>
                     <li><a href="#gsAboutPage" data-theme="a">
-                        <img class="icon_image" src="img/about.png" ><br/>About </a>
+                        <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
                     </li>
                 </ul>
             </div>
         </footer>
     </div>
 
-    <!-- Wanted Page -->
+    <!--Wanted page-->
     <div id="gsWantedPage" data-role="page">
         <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
             <h1 >Volunteer wanted</h1>
@@ -112,101 +199,23 @@
             <div data-role="navbar" style="background-color: white">
                 <ul>
                     <li><a href="#gsHomePage" data-theme="a">
-                        <img class="icon_image" src="img/house-outline.png" ><br/>Home</a>
+                        <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
                     </li>
                     <li><a href="#gsExplorePage" style="background-color: #ffcccc; color:black;">
-                        <img class="icon_image" src="img/search.png" ><br/>Explore</a>
+                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
                     </li>
                     <li><a href="#gsWantedPage"  data-theme="a">
-                        <img class="icon_image" src="img/needed.png" ><br/>wanted</a>
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>wanted</a>
                     </li>
-                    <li><a href="#gsProfilePage"  data-theme="a">
-                        <img class="icon_image" src="img/profile.png" ><br/> Profile </a></li>
                     <li><a href="#gsAboutPage" data-theme="a">
-                        <img class="icon_image" src="img/about.png" ><br/>About </a>
+                        <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
                     </li>
                 </ul>
             </div>
         </footer>
     </div>
 
-    <div id="gsProfilePage" data-role="page">
-        <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
-            <h1 >Edit Profile</h1>
-        </header>
-        <section data-role="content">
-            <form id="gsFrmModifyReview" name="gsFrmModifyReview">
-                <label for="gsBusinessNameModify">Business Name:</label>
-                <input type="text" name="gsBusinessNameModify" id="gsBusinessNameModify" value="Pizza Pizza">
-
-                <label for="gsTypeModify">Type:</label>
-                <select name="gsTypeModify" id="gsTypeModify">
-                </select>
-
-                <label for="gsReviewerEmailModify">Reviewer Email:</label>
-                <input type="text" name="gsReviewerEmailModify" id="gsReviewerEmailModify" value="gseo@gmail.com">
-
-                <label for="gsReviewerCommentModify">Reviewer Comments:</label>
-                <textarea name="gsReviewerCommentModify" id="gsReviewerCommentModify" cols="30" rows="10" style="text-align: left">Terrible Pizza!</textarea>
-
-                <label for="gsReviewDateModify">Review Date:</label>
-                <input type="date" name="gsReviewDateModify" id="gsReviewDateModify" data-clear-btn="true">
-
-                <label for="gsCheckRatingModify">Do you want to your ratings?</label>
-                <input type="checkbox" name="gsCheckRatingModify" id="gsCheckRatingModify" data-iconpos="left">
-
-                <div id="gsRatingsModify">
-                    <label for="gsFoodQualityModify">Food Quality(0-5):</label>
-                    <input type="number" name="gsFoodQualityModify" id="gsFoodQualityModify" value="0">
-
-                    <label for="gsServiceModify">Service(0-5):</label>
-                    <input type="number" name="gsServiceModify" id="gsServiceModify" value="0">
-
-                    <label for="gsValueModify">Value(0-5):</label>
-                    <input type="number" name="gsValueModify" id="gsValueModify" value="0">
-
-                    <label for="gsOverallRatingsModify">Overall Ratings (1-100):</label>
-                    <input type="text" name="gsOverallRatingsModify" id="gsOverallRatingsModify" disabled="disabled">
-                </div>
-
-                <fieldset data-role="controlgroup" data-type="horizontal">
-                    <button type="button" id="gsBtnCancelModify" name="gsBtnCancelModify"
-                            style="background-color: yellow; color: black; width: 60px" >
-                        Cancel
-                    </button>
-                    <button type="button" id="gsBtnDeleteModify" name="gsBtnDeleteModify"
-                            style="background-color: black; color: white; width: 60px" >
-                        Delete
-                    </button>
-                    <button type="button" id="gsBtnUpdateModify" name="gsBtnUpdateModify"
-                            style="background-color: #22aadd; color: white; width: 60px" >
-                        Update
-                    </button>
-                </fieldset>
-            </form>
-        </section>
-        <footer data-role="footer" data-theme="b" data-position="fixed" >
-            <div data-role="navbar" style="background-color: white">
-                <ul>
-                    <li><a href="#gsHomePage" data-theme="a">
-                        <img class="icon_image" src="img/house-outline.png" ><br/>Home</a>
-                    </li>
-                    <li><a href="#gsExplorePage" style="background-color: #ffcccc; color:black;">
-                        <img class="icon_image" src="img/search.png" ><br/>Explore</a>
-                    </li>
-                    <li><a href="#gsWantedPage"  data-theme="a">
-                        <img class="icon_image" src="img/needed.png" ><br/>wanted</a>
-                    </li>
-                    <li><a href="#gsProfilePage"  data-theme="a">
-                        <img class="icon_image" src="img/profile.png" ><br/> Profile </a></li>
-                    <li><a href="#gsAboutPage" data-theme="a">
-                        <img class="icon_image" src="img/about.png" ><br/>About </a>
-                    </li>
-                </ul>
-            </div>
-        </footer>
-    </div>
-
+    <!--About page-->
     <div id="gsAboutPage" data-role="page" style="background-image: url('img/vol.png')">
         <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
             <h1 >About</h1>
@@ -218,18 +227,16 @@
             <div data-role="navbar" style="background-color: white">
                 <ul>
                     <li><a href="#gsHomePage" data-theme="a">
-                        <img class="icon_image" src="img/house-outline.png" ><br/>Home</a>
+                        <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
                     </li>
                     <li><a href="#gsExplorePage" style="background-color: #ffcccc; color:black;">
-                        <img class="icon_image" src="img/search.png" ><br/>Explore</a>
+                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
                     </li>
                     <li><a href="#gsWantedPage"  data-theme="a">
-                        <img class="icon_image" src="img/needed.png" ><br/>wanted</a>
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>wanted</a>
                     </li>
-                    <li><a href="#gsProfilePage"  data-theme="a">
-                        <img class="icon_image" src="img/profile.png" ><br/> Profile </a></li>
                     <li><a href="#gsAboutPage" data-theme="a">
-                        <img class="icon_image" src="img/about.png" ><br/>About </a>
+                        <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
                     </li>
                 </ul>
             </div>

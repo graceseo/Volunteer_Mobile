@@ -4,100 +4,33 @@
 * Revision History:
 *        Gyeonglim Seo, 2019-04-11 : Created
 */
-function gsCheckRatingAdd_change() {
-    gsShowHideRatingsAdd();
+
+function gsHomePage_Show() {
+    // gsGetRecentWanted();
 }
 
-function gsFoodQualityAdd_change() {
-    gsCalculateRatingAdd();
+function gsExplorePage_show() {
+    gsGetCategory();
 }
 
-function gsServiceAdd_change() {
-    gsCalculateRatingAdd();
+function gsBtnLogin_click() {
+    gsCheckId();
 }
 
-function gsValueAdd_change() {
-    gsCalculateRatingAdd();
+function gsBtnSignup_click() {
+    $(location).prop('href', '#gsVolunteerSignPage');
 }
 
-function gsCheckRatingModify_change() {
-    gsShowHideRatingsModify();
-}
+function gsBtnVolJoinSave_click() {
 
-function gsFoodQualityModify_change() {
-    gsCalculateRatingModify();
-}
-
-function gsServiceModify_change() {
-    gsCalculateRatingModify();
-}
-
-function gsValueModify_change() {
-    gsCalculateRatingModify()
-}
-
-function gsBtnSave_click() {
-    gsAddFeedback();
-}
-
-function gsBtnUpdateModify_click() {
-    gsUpdateFeedback();
-}
-
-function gsBtnSaveDefaults_click() {
-    gsSaveDefaultsReviewerEmail();
-}
-function gsEditFeedbackPage_show() {
-    $("#gsRatingsModify").hide();
-    gsShowCurrentReview();
-}
-
-function gsBtnClearDatabase_click() {
-    gsClearDatabase();
-}
-
-function gsAddFeedbackPage_show() {
-    $("#gsRatingsAdd").hide();
-    gsLoadDefaultEmail();
-    gsUpdateTypesDropdown();
-}
-
-function gsVeiwFeedbackPage_show() {
-    gsGetReviews();
-}
-
-function gsBtnDeleteModify_click() {
-    gsDeleteFeddback();
-}
-
-function gsBtnCancelModify_click() {
-    $(location).prop('href', '#gsVeiwFeedbackPage');
 }
 
 function init() {
-    $("#gsCheckRatingAdd").on("click", gsCheckRatingAdd_change);
-    $("#gsFoodQualityAdd").on("change", gsFoodQualityAdd_change);
-    $("#gsServiceAdd").on("change", gsServiceAdd_change);
-    $("#gsValueAdd").on("change", gsValueAdd_change);
-
-    $("#gsCheckRatingModify").on("click", gsCheckRatingModify_change);
-    $("#gsFoodQualityModify").on("change", gsFoodQualityModify_change);
-    $("#gsServiceModify").on("change", gsServiceModify_change);
-    $("#gsValueModify").on("change", gsValueModify_change);
-
-    $("#gsBtnSave").on("click", gsBtnSave_click);
-
-    $("#gsBtnDeleteModify").on("click", gsBtnDeleteModify_click);
-    $("#gsBtnUpdateModify").on("click", gsBtnUpdateModify_click);
-    $("#gsBtnCancelModify").on("click", gsBtnCancelModify_click);
-
-    $("#gsBtnSaveDefaults").on("click", gsBtnSaveDefaults_click);
-    $("#gsBtnClearDatabase").on("click", gsBtnClearDatabase_click);
-
-    $("#gsAddFeedbackPage").on("pageshow", gsAddFeedbackPage_show);
-    $("#gsEditFeedbackPage").on("pageshow", gsEditFeedbackPage_show);
-
-    $("#gsVeiwFeedbackPage").on("pageshow", gsVeiwFeedbackPage_show);
+    $("#gsHomePage").on("pageshow", gsHomePage_Show);
+    $("#gsExplorePage").on("pageshow", gsExplorePage_show);
+    $("#gsBtnLogin").on("click",gsBtnLogin_click);
+    $("#gsBtnSignup").on("click", gsBtnSignup_click);
+    $("#gsBtnVolJoinSave").on("click", gsBtnVolJoinSave_click);
 }
 
 function initDB() {
