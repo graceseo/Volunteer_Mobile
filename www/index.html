@@ -31,16 +31,19 @@
     <!-- Home Page-->
     <div id="gsHomePage" data-role="page" style="background-color: white" >
         <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
-            <h1 >VolunteerHUB</h1>
+            <h1 >Volunteers</h1>
         </header>
         <section data-role="content" style="background-color: white" >
-            <h3>Become a volunteer</h3>
-            <a href="#gsVolunteerLoginPage"><img src="img/getInvolved.png" class="main_image" alt="loginPage"></a><br/><br/>
-
-            <h3>Need a volunteer?</h3>
-            <a href="#gsVolunteerSignPage"><img src="img/volunteer_back.jpg" class="main_image" alt="signPage"></a><br/><br/>
-
-            <h3>Recently Updated</h3>
+            <br/><br/>
+            <a href="#gsAddWorkPage"><img src="img/add_work.png" class="main_image" alt="loginPage"></a>
+            <div id="gsOldSaying1" class="gsOldSaying">
+                <h4>"Doing nothing for others is the undoing of ourselves."</h4>
+                - Horace Mann</div>
+            <br/><br/>
+           <a href="#gsWorkListPage"><img src="img/volunteer_work.jpg" class="main_image" alt="signPage"></a>
+            <div id="gsOldSaying2" class="gsOldSaying">
+                <h4>Remember that the happiest people are not those getting more, but those giving more.</h4>
+                - H. Jackson Brown Jr.</div>
         </section>
         <footer data-role="footer" data-theme="b" data-position="fixed" >
             <div data-role="navbar" style="background-color: white">
@@ -48,53 +51,11 @@
                     <li><a href="#gsHomePage" style="background-color: #ffcccc; color:black;">
                         <img class="icon_image" src="img/house-outline.png" alt="home" ><br/>Home</a>
                     </li>
-                    <li><a href="#gsExplorePage" data-theme="a">
-                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
+                    <li><a href="#gsOrgzListPage" data-theme="a">
+                        <img class="icon_image" src="img/organization.png" alt="add"><br/>Organization</a>
                     </li>
-                    <li><a href="#gsWantedPage"  data-theme="a">
-                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Wanted</a>
-                    </li>
-                    <li><a href="#gsAboutPage" data-theme="a">
-                        <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
-                    </li>
-                </ul>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Volunteer Login -->
-    <div id="gsVolunteerLoginPage" data-role="page" style="background-color: white" >
-        <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
-            <h1 >Volunteer Login</h1>
-        </header>
-        <section data-role="content" style="background-color: white" >
-            <form id="gsFrmLogin" name="gsFrmLogin">
-                <label for="gsLoginID">ID</label>
-                <input type="text" name="gsLoginID" id="gsLoginID"><br/>
-                <label for="gsLoginPwd">Password</label>
-                <input type="password" name="gsLoginPwd" id="gsLoginPwd">
-
-                <button type="button" id="gsBtnLogin" name="gsBtnLogin"
-                        style="background-color: #ffcccc; color: black; width: 100px" >
-                    Log in</button>
-                <br/>
-                <h3>Are you not a member? Plase join us</h3>
-                <button type="button" id="gsBtnSignUp" name="gsBtnSignUp"
-                        style="background-color: #ffcccc; color: black;" >
-                    Sign up</button>
-            </form>
-        </section>
-        <footer data-role="footer" data-theme="b" data-position="fixed" >
-            <div data-role="navbar" style="background-color: white">
-                <ul>
-                    <li><a href="#gsHomePage" style="background-color: #ffcccc; color:black;">
-                        <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
-                    </li>
-                    <li><a href="#gsExplorePage" data-theme="a">
-                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
-                    </li>
-                    <li><a href="#gsWantedPage"  data-theme="a">
-                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Wanted</a>
+                    <li><a href="#gsWorkListPage"  data-theme="a">
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Work</a>
                     </li>
                     <li><a href="#gsAboutPage" data-theme="a">
                         <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
@@ -104,66 +65,34 @@
         </footer>
     </div>
 
-    <!-- Volunteer Signup -->
-    <div id="gsVolunteerSignPage" data-role="page">
+    <!-- Add volunteer work Page -->
+    <div id="gsAddWorkPage" data-role="page" style="background-color: white" >
         <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
-            <h1>Sign up</h1>
+            <h1 >Add Volunteer Work</h1>
         </header>
-        <section data-role="content" >
-            <form id="gsFrmJoinVolunteer" name="gsFrmJoinVolunteer">
+        <section data-role="content" style="background-color: white">
+            <form id="gsFrmAddWork" name="gsFrmAddWork">
+                <label for="gsAddCategoryList">Category:</label>
+                <select name="gsAddCategoryList" id="gsAddCategoryList">
+                </select>
 
-                <label for="gsLoginIDVolJoin">ID: </label>
-                <input type="text" name="gsLoginIDVolJoin" id="gsLoginIDVolJoin"><br/>
-
-                <label for="gsLoginPwdVolJoin">Password: </label>
-                <input type="password" name="gsLoginPwdVolJoin" id="gsLoginPwdVolJoin">
-
-                <label for="gsFirstNameVolJoin">First Name:</label>
-                <input type="text" name="gsFirstNameVolJoin" id="gsFirstNameVolJoin">
-
-                <label for="gsLastNameVolJoin">Last Name:</label>
-                <input type="text" name="gsLastNameVolJoin" id="gsLastNameVolJoin">
-
-                <label for="gsPhoneVolJoin">Phone:</label>
-                <input type="text" name="gsPhoneVolJoin" id="gsPhoneVolJoin">
-
-                <label for="gsEmailVolJoin">Email:</label>
-                <input type="text" name="gsEmailVolJoin" id="gsEmailVolJoin">
-
-                <button type="button" id="gsBtnVolJoinSave" name="gsBtnSaveVolJoin"
-                        style="background-color: #ffcccc; color: white; width: 80px" >
+                <label for="gsWorkOrgzNameAdd">Organization Name:</label>
+                <input type="text" name="gsWorkOrgzNameAdd" id="gsWorkOrgzNameAdd">
+                <label for="gsWorkOrgzContectNameAdd">Contact Full Name:</label>
+                <input type="text" name="gsWorkOrgzContectNameAdd" id="gsWorkOrgzContectNameAdd" >
+                <label for="gsWorkOrgzContectPhoneAdd">Contact Phone:</label>
+                <input type="text" name="gsWorkOrgzContectPhoneAdd" id="gsWorkOrgzContectPhoneAdd">
+                <label for="gsWorkOrgzContectAddressAdd">Contact Address:</label>
+                <input type="text" name="gsWorkOrgzContectAddressAdd" id="gsWorkOrgzContectAddressAdd">
+                <label for="gsWorkPositionAdd">Position:</label>
+                <input type="text" name="gsWorkPositionAdd" id="gsWorkPositionAdd">
+                <label for="gsWorkStartDateAdd">Start Date:</label>
+                <input type="date" name="gsWorkStartDateAdd" id="gsWorkStartDateAdd">
+                <label for="gsWorkEndDateAdd">End Date:</label>
+                <input type="date" name="gsWorkEndDateAdd" id="gsWorkEndDateAdd">
+                <button type="button" id="gsBtnWorkAddSave" name="gsBtnWorkSave"
+                        style="background-color: #ffcccc; color: #ff0000; width: 80px" >
                     Save</button>
-            </form>
-        </section>
-        <footer data-role="footer" data-theme="b" data-position="fixed" >
-            <div data-role="navbar" style="background-color: white">
-                <ul>
-                    <li><a href="#gsHomePage" style="background-color: #ffcccc; color:black;">
-                        <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
-                    </li>
-                    <li><a href="#gsExplorePage" data-theme="a">
-                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
-                    </li>
-                    <li><a href="#gsWantedPage"  data-theme="a">
-                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Wanted</a>
-                    </li>
-                    <li><a href="#gsAboutPage" data-theme="a">
-                        <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
-                    </li>
-                </ul>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Explore Page -->
-    <div id="gsExplorePage" data-role="page">
-        <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
-            <h1 >Explore Opportunity</h1>
-        </header>
-        <section data-role="content" >
-            <form id="gsFrmExplore" name="gsFrmExplore">
-                <ul id="gsExploreList" data-role="listview" data-inset="true" data-icon="">
-                </ul>
             </form>
         </section>
         <footer data-role="footer" data-theme="b" data-position="fixed" >
@@ -172,11 +101,11 @@
                     <li><a href="#gsHomePage" data-theme="a">
                         <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
                     </li>
-                    <li><a href="#gsExplorePage" style="background-color: #ffcccc; color:black;">
-                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
+                    <li><a href="#gsAddWorkPage" style="background-color: #ffcccc; color:black;">
+                        <img class="icon_image" src="img/organization.png" alt="add"><br/>Organization</a>
                     </li>
-                    <li><a href="#gsWantedPage"  data-theme="a">
-                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Wanted</a>
+                    <li><a href="#gsWorkListPage"  data-theme="a">
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Work</a>
                     </li>
                     <li><a href="#gsAboutPage" data-theme="a">
                         <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
@@ -186,13 +115,13 @@
         </footer>
     </div>
 
-    <!--Wanted page-->
-    <div id="gsWantedPage" data-role="page">
+    <!-- work list-->
+    <div id="gsWorkListPage" data-role="page"  style="background-color: white" >
         <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
-            <h1 >Volunteer wanted</h1>
+            <h1 >List of Your Work</h1>
         </header>
-        <section data-role="content">
-            <ul id="gsFeedbackList" data-role="listview" data-inset="true" data-icon="">
+        <section data-role="content"  style="background-color: white">
+            <ul id="gsWorkList" data-role="listview" data-inset="true" data-icon="">
             </ul>
         </section>
         <footer data-role="footer" data-theme="b" data-position="fixed" >
@@ -201,11 +130,11 @@
                     <li><a href="#gsHomePage" data-theme="a">
                         <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
                     </li>
-                    <li><a href="#gsExplorePage" style="background-color: #ffcccc; color:black;">
-                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
+                    <li><a href="#gsAddWorkPage" data-theme="a">
+                        <img class="icon_image" src="img/organization.png" alt="add"><br/>Organization</a>
                     </li>
-                    <li><a href="#gsWantedPage"  data-theme="a">
-                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>wanted</a>
+                    <li><a href="#gsWorkListPage" style="background-color: #ffcccc; color:black;">
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Work</a>
                     </li>
                     <li><a href="#gsAboutPage" data-theme="a">
                         <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
@@ -215,6 +144,97 @@
         </footer>
     </div>
 
+    <!-- Edit volunteer work Page -->
+    <div id="gsEditWorkPage" data-role="page" style="background-color: white" >
+        <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
+            <h1 >Edit Volunteer Work</h1>
+        </header>
+        <section data-role="content" style="background-color: white">
+            <form id="gsFrmEditWork" name="gsFrmEditWork">
+                <label for="gsEditCategoryList">Category:</label>
+                <select name="gsEditCategoryList" id="gsEditCategoryList">
+                </select>
+
+                <label for="gsWorkOrgzNameEdit">Organization Name:</label>
+                <input type="text" name="gsWorkOrgzNameEdit" id="gsWorkOrgzNameEdit">
+                <label for="gsWorkOrgzContectNameEdit">Contact Full Name:</label>
+                <input type="text" name="gsWorkOrgzContectNameEdit" id="gsWorkOrgzContectNameEdit" >
+                <label for="gsWorkOrgzContectPhoneEdit">Contact Phone:</label>
+                <input type="text" name="gsWorkOrgzContectPhoneEdit" id="gsWorkOrgzContectPhoneEdit">
+                <label for="gsWorkOrgzContectAddressEdit">Contact Address:</label>
+                <input type="text" name="gsWorkOrgzContectAddressEdit" id="gsWorkOrgzContectAddressEdit">
+                <label for="gsWorkPositionEdit">Position:</label>
+                <input type="text" name="gsWorkPositionEdit" id="gsWorkPositionEdit">
+                <label for="gsWorkStartDateEdit">Start Date:</label>
+                <input type="date" name="gsWorkStartDateEdit" id="gsWorkStartDateEdit">
+                <label for="gsWorkEndDateEdit">End Date:</label>
+                <input type="date" name="gsWorkEndDateEdit" id="gsWorkEndDateEdit">
+
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <button type="button" id="gsBtnCancelEdit" name="gsBtnCancelModify"
+                            style="background-color: yellow; color: black; width: 60px" >
+                        Cancel
+                    </button>
+                    <button type="button" id="gsBtnDeleteEdit" name="gsBtnDeleteModify"
+                            style="background-color: black; color: white; width: 60px" >
+                        Delete
+                    </button>
+                    <button type="button" id="gsBtnUpdateEdit" name="gsBtnUpdateModify"
+                            style="background-color: #22aadd; color: white; width: 60px" >
+                        Update
+                    </button>
+                </fieldset>
+
+            </form>
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed" >
+            <div data-role="navbar" style="background-color: white">
+                <ul>
+                    <li><a href="#gsHomePage" data-theme="a">
+                        <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
+                    </li>
+                    <li><a href="#gsAddWorkPage" data-theme="a">
+                        <img class="icon_image" src="img/organization.png" alt="add"><br/>Organization</a>
+                    </li>
+                    <li><a href="#gsWorkListPage" style="background-color: #ffcccc; color:black;" data-theme="a">
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Work</a>
+                    </li>
+                    <li><a href="#gsAboutPage" data-theme="a">
+                        <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Organization List-->
+    <div id="gsOrgzListPage" data-role="page"  style="background-color: white" >
+        <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
+            <h1 >List of Organizations</h1>
+        </header>
+        <section data-role="content"  style="background-color: white">
+            <ul id="gsOrgzList" data-role="listview" data-inset="true" data-icon="">
+            </ul>
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed" >
+            <div data-role="navbar" style="background-color: white">
+                <ul>
+                    <li><a href="#gsHomePage" data-theme="a">
+                        <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
+                    </li>
+                    <li><a href="#gsAddWorkPage" style="background-color: #ffcccc; color:black;">
+                        <img class="icon_image" src="img/organization.png" alt="add"><br/>Organization</a>
+                    </li>
+                    <li><a href="#gsWorkListPage" data-theme="a">
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Work</a>
+                    </li>
+                    <li><a href="#gsAboutPage" data-theme="a">
+                        <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+    </div>
     <!--About page-->
     <div id="gsAboutPage" data-role="page" style="background-image: url('img/vol.png')">
         <header data-role="header"  data-position="fixed" style="background-color: #ffcccc">
@@ -229,11 +249,11 @@
                     <li><a href="#gsHomePage" data-theme="a">
                         <img class="icon_image" src="img/house-outline.png" alt="home"><br/>Home</a>
                     </li>
-                    <li><a href="#gsExplorePage" style="background-color: #ffcccc; color:black;">
-                        <img class="icon_image" src="img/search.png" alt="explore"><br/>Explore</a>
+                    <li><a href="#gsAddWorkPage" style="background-color: #ffcccc; color:black;">
+                        <img class="icon_image" src="img/organization.png" alt="add"><br/>Organization</a>
                     </li>
-                    <li><a href="#gsWantedPage"  data-theme="a">
-                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>wanted</a>
+                    <li><a href="#gsWorkListPage"  data-theme="a">
+                        <img class="icon_image" src="img/needed.png" alt="wanted"><br/>Work</a>
                     </li>
                     <li><a href="#gsAboutPage" data-theme="a">
                         <img class="icon_image" src="img/about.png" alt="about"><br/>About </a>
