@@ -4,127 +4,247 @@
  * Revision History:
  *        Gyeonglim Seo, 2019-04-11 : Created
  */
-//
-// function gsAddFeedback() {
-//     //1.test validation
-//     if(gsDoValidate_gsFrmAddReview()){
-//         console.info("Validation is successful");
-//         //2. if validation is successful then fetch the info from input controls
-//         var businessName = $("#gsBusinessNameAdd").val();
-//         var typeId=$("#gsTypeAdd").val();
-//         var reviewerEmail=$("#gsReviewerEmailAdd").val();
-//         var reviewerComments=$("#gsReviewerCommentAdd").val();
-//         var reviewDate=$("#gsReviewDateAdd").val();
-//         var hasRating=$("#gsCheckRatingAdd").prop("checked");
-//         var rating1=$("#gsFoodQualityAdd").val();
-//         var rating2=$("#gsServiceAdd").val();
-//         var rating3=$("#gsValueAdd").val();
-//         var opt;
-//
-//         //3. only your ratings' checkbox is checked, rating1/rating2/rating3 is included
-//         if(hasRating){
-//             opt = [businessName, typeId, reviewerEmail,reviewerComments,reviewDate,hasRating,rating1,rating2,rating3];
-//         }else{
-//             opt=[businessName, typeId, reviewerEmail, reviewerComments,reviewDate,hasRating,null,null,null];
-//         }
-//         function success() {
-//             console.info("Record inserted successfully");
-//             alert("New Feedback Added");
-//         }
-//         //4. insert into table (by calling insert DAL function and supplying the inputs
-//         Review.insert(opt, success);
-//
-//
-//     }else{
-//         console.error("Adding Review failed");
-//     }
-// }
-//
-// function gsGetlNewOrgz() {
-//     var options=[];
-//
-//     function callback(tx, results) {
-//         var htmlCode="";
-//
-//         for(var i=0; i<results.rows.length; i++){
-//             var row=results.rows[i];
-//             var overollRating=0;
-//
-//             //Only if the 'hasRating' field is true, ovarollaRating will be calculated
-//             if(row['hasRating']){
-//                 //call a function for calculating
-//                 overollRating=getOverallRating(row['rating1'],row['rating2'],row['rating3']);
-//             }
-//             htmlCode += "<li><a data-role='button' data-row-id=" + row['id'] + " href='#'>"+
-//                 "<h2>Business Name: "+row['businessName']+"</h2>"+
-//                 "<p>Reviewer Email: "+row['reviewerEmail']+"<br>"+
-//                 "Comments: "+row['reviewerComments']+"<br>"+
-//                 "Overall Rating: "+overollRating+"</p></a></li>";
-//         }
-//
-//         var lv = $("#gsFeedbackList");
-//
-//         lv =lv.html(htmlCode);
-//         lv.listview("refresh");  //very important
-//
-//         function clickHandler() {
-//             localStorage.setItem("id", $(this).attr("data-row-id") );
-//
-//             $(location).prop('href', '#gsEditFeedbackPage');
-//         }
-//
-//         $("#gsFeedbackList a").on("click", clickHandler);
-//
-//     }
-//
-//     Review.selectAll(options, callback);
-// }
-function gsGetCategory() {
-    var options = [];
+
+function gsAddWork() {
+    //1.test validation
+    if(gsDoValidate_gsFrmAddWork()){
+        console.info("Validation is successful");
+
+        var workCategory=$("#gsAddCategoryList").val();
+        var orgzName=$("#gsWorkOrgzNameAdd").val();
+        var contactName=$("#gsWorkOrgzContectNameAdd").val();
+        var contactPhone=$("#gsWorkOrgzContectPhoneAdd").val();
+        var contactAddress=$("#gsWorkOrgzContectAddressAdd").val();
+        var workPostion=$("#gsWorkPositionAdd").val();
+        var workStart=$("#gsWorkStartDateAdd").val();
+        var workEnd=$("#gsWorkEndDateAdd").val();
+
+         var opt;
+         opt = [orgzName, contactName, contactPhone, contactAddress];
+
+         function success() {
+             console.info("Record inserted successfully into organization table");
+         }
+         organization.insert(opt, success);
+
+         var option;
+         option=[orgzName,workCategory,workPostion,workStart,workEnd];
+
+         function workSuccess() {
+            console.info("Record inserted successfully into works table");
+            alert("New work added");
+        }
+
+        works.insert(option, workSuccess);
+        $(location).prop('href', '#gsWorkListPage');
+    }else{
+        console.error("Adding Work failed");
+    }
+}
+
+function gsGetWorkList() {
+    var options=[];
 
     function callback(tx, results) {
         var htmlCode="";
 
-        for (var i = 0; i < results.rows.length; i++) {
-            var row = results.rows[i];
-
-            htmlCode += "<li><a data-role='button' data-row-id=" + row['id'] + " href='#'>"+
-                "<img src='"+row['image']+"'><h2>"+row['name']+"</h2></p></a></li>";
+        for(var i=0; i<results.rows.length; i++){
+            var row=results.rows[i];
+            htmlCode += "<li><a data-role='button' data-row-id=" +row['work_id']+ " href='#'>"+
+                "<img src="+row['image']+" width='100%' height='100'>"+
+                "<h2>"+row['position']+"</h2>"+
+                "<p><b>Organazation Name</b>: "+row['orgz_name']+"<br/>"+
+                 "<b>Category</b>: "+row['name']+"<br/>"+
+                 row['start_date']+" ~ "+
+                 row['end_date']+"</p></a></li>";
         }
-        var lv = $("#gsExploreList");
+
+        var lv = $("#gsWorkList");
 
         lv =lv.html(htmlCode);
         lv.listview("refresh");  //very important
 
         function clickHandler() {
-            localStorage.setItem("id", $(this).attr("data-row-id") );
+            window.localStorage.removeItem("id");
+            window.localStorage.setItem("id", $(this).attr("data-row-id") );
 
-            $(location).prop('href', '#gsEditFeedbackPage');
+            $(location).prop('href', '#gsEditWorkPage');
         }
 
-        $("#gsExploreList a").on("click", clickHandler);
+        $("#gsWorkList a").on("click", clickHandler);
+
+    }
+    works.selectAll(options, callback);
+}
+
+/*
+*Get list of categories
+ */
+function gsGetCategory(para) {
+    var options = [];
+    var parameter=para;
+
+    function callback(tx, results) {
+        var htmlCode="";
+
+        for (var i = 0; i < results.rows.length; i++) {
+
+            var row = results.rows[i];
+            var selected="";
+            if(parameter!=null){
+                if(row['category_id']===parameter){
+                    selected="selected";
+                }
+            }else{
+                if(row['name']==="Animals"){
+                    selected="selected";
+                }
+            }
+            htmlCode +="<option value="+row['category_id']+" "+selected+">"+row['name']+"</option>";
+        }
+        if(parameter!=null){
+            var sv=$("#gsEditCategoryList");
+        }else{
+            var sv=$("#gsAddCategoryList");
+        }
+        sv =sv.html(htmlCode);
+        sv.selectmenu("refresh")
     }
     Category.selectAll(options, callback);
 }
 
-function gsCheckId() {
-    var opt;
-    var id=$("#gsLoginID").val();
-    var pwd=$("#gsLoginPwd").val();
-    opt=[id, pwd];
+function getShowCurrentWork() {
+    var id=window.localStorage.getItem("id");
+    var options=[id];
+
+    function callback(tx, results) {
+        var row=results.rows[0];
+
+        $("#gsWorkOrgzNameEdit").val(row['orgz_name']);
+        $("#gsWorkOrgzContectNameEdit").val(row['contact_full_name']);
+        $("#gsWorkOrgzContectPhoneEdit").val(row['contact_phone']);
+        $("#gsWorkOrgzContectAddressEdit").val(row['address']);
+        $("#gsWorkPositionEdit").val(row['position']);
+        $("#gsWorkStartDateEdit").val(row['start_date']);
+        $("#gsWorkEndDateEdit").val(row['end_date']);
+
+        gsGetCategory(row['category_id']);
+    }
+    works.select(options,callback);
+}
+
+function gsDeleteWork() {
+    var id=window.localStorage.getItem("id");
+    var opt=[id];
+
+    function success() {
+        alert("Work Deleted successfully");
+    }
+    works.delete(opt, success);
+}
+
+function gsUpdateWork(){
+    var id=window.localStorage.getItem("id");
+    //1.test validation
+    if(gsDoValidate_gsFrmAddWork()){
+        console.info("Validation is successful");
+        //2. if validation is successful then fetch the info from input controls
+        var workCategory=$("#gsEditCategoryList").val();
+        var orgzName=$("#gsWorkOrgzNameEdit").val();
+        var contactName=$("#gsWorkOrgzContectNameEdit").val();
+        var contactPhone=$("#gsWorkOrgzContectPhoneEdit").val();
+        var contactAddress=$("#gsWorkOrgzContectAddressEdit").val();
+        var workPostion=$("#gsWorkPositionEdit").val();
+        var workStart=$("#gsWorkStartDateEdit").val();
+        var workEnd=$("#gsWorkEndDateEdit").val();
+
+        var opt;
+        opt = [orgzName, contactName, contactPhone, contactAddress];
+
+        function success() {
+            console.info("Record Updated successfully into organization table");
+        }
+        // 'organization table can be replaced(or duplication key update), so dont' need update
+        organization.insert(opt, success);
+
+        var option;
+        option=[orgzName,workCategory,workPostion,workStart,workEnd, id];
+
+        function workSuccess() {
+            console.info("Record Updated successfully into works table");
+        }
+
+        works.update(option, workSuccess);
+
+        $(location).prop('href', '#gsWorkListPage');
+    }else{
+        console.error("Adding Work failed");
+    }
+}
+
+function gsGetOrganizationList() {
+    var options=[];
 
     function callback(tx, results) {
         var htmlCode="";
-        if (results.rows.length!==null || results.rows.length!==0) {
-            var row=results.rows[1]
-            htmlCode += "<h1>"+row['first_name']+"!</h1>" ;
+
+        for(var i=0; i<results.rows.length; i++){
+            var row=results.rows[i];
+            htmlCode += "<li><a data-role='button' data-row-id=" +row['orgz_name']+ " href='#'>"+
+                "<h2>"+row['orgz_name']+"</h2>"+
+                "<p><b>Address: </b>: "+row['address']+"<br/>"+
+                "<b>Number of you work</b>: "+row['work_count']+"<br/></p></a></li>";
         }
-        var lv = $("#gsExploreHeader");
 
-        lv.html(htmlCode);
+        var lv = $("#gsOrgzList");
+
+        lv =lv.html(htmlCode);
+        lv.listview("refresh");  //very important
+
+        function clickHandler() {
+            window.localStorage.setItem("orgzName", $(this).attr("data-row-id") );
+
+            $(location).prop('href', '#gsOrgzWorkListPage');
+        }
+
+        $("#gsOrgzList a").on("click", clickHandler);
+
     }
-    Volunteer.select(opt, callback);
+    organization.selectAllwithWorkCount(options, callback);
 }
-function gsAddVolunteer() {
 
+function gsGetOrgzWorkList() {
+    var orgzName=window.localStorage.getItem("orgzName");
+    var options=[orgzName];
+
+    function callback(tx, results) {
+        var htmlCode="";
+
+        for(var i=0; i<results.rows.length; i++){
+            var row=results.rows[i];
+            htmlCode += "<li><a data-role='button' data-row-id=" +row['work_id']+ " href='#'>"+
+                "<img src="+row['image']+" width='100%' height='100'>"+
+                "<h2>"+row['position']+"</h2>"+
+                "<p><b>Organazation Name</b>: "+row['orgz_name']+"<br/>"+
+                "<b>Category</b>: "+row['name']+"<br/>"+
+                row['start_date']+" ~ "+
+                row['end_date']+"</p></a></li>";
+        }
+
+        var lv = $("#gsOrgzWorkList");
+
+        lv =lv.html(htmlCode);
+        lv.listview("refresh");  //very important
+
+        function clickHandler() {
+            window.localStorage.removeItem("id");
+            window.localStorage.setItem("id", $(this).attr("data-row-id") );
+
+            $(location).prop('href', '#gsEditWorkPage');
+        }
+
+        $("#gsOrgzWorkList a").on("click", clickHandler);
+
+    }
+    works.selectOrgzworkList(options, callback);
 }

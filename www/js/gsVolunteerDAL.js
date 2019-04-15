@@ -8,7 +8,7 @@
 var Category={
     selectAll: function (options, callback) {
         function txFunction(tx) {
-            var sql = "SELECT * FROM category;";
+            var sql = "SELECT * FROM Category;";
             tx.executeSql(sql, options, callback, errorHandler);
         }
         function successTransaction() {
@@ -90,12 +90,12 @@ var works={
     },
     selectAll: function (options, callback) {
         function txFunction(tx) {
-            var sql = "SELECT work_id,orgz_name,image,name,position,start_date,end_date FROM works, category "+
-                "WHERE works.category_id=category.category_id;";
+            var sql = "SELECT work_id,orgz_name,image,name,position,start_date,end_date FROM works,Category "+
+                "WHERE works.category_id=Category.category_id;";
             tx.executeSql(sql, options, callback, errorHandler);
         }
         function successTransaction() {
-            console.info("Select transaction is successful");
+            console.info("SelectAll transaction is successful");
         }
         db.transaction(txFunction, errorHandler, successTransaction);
     },
@@ -111,4 +111,15 @@ var works={
         }
         db.transaction(txFunction, errorHandler, successTransaction);
     },
+    selectOrgzworkList: function (options, callback) {
+        function txFunction(tx) {
+            var sql = "SELECT work_id,orgz_name,image,name,position,start_date,end_date FROM works,Category "+
+                "WHERE works.category_id=Category.category_id and orgz_name=?;";
+            tx.executeSql(sql, options, callback, errorHandler);
+        }
+        function successTransaction() {
+            console.info("Select transaction is successful");
+        }
+        db.transaction(txFunction, errorHandler, successTransaction);
+    }
 };

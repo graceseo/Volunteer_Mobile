@@ -42,6 +42,10 @@ function gsOrgzListPage_show() {
     gsGetOrganizationList();
 }
 
+function gsOrgzWorkListPage_show() {
+    gsGetOrgzWorkList();
+}
+
 function init() {
     $("#gsHomePage").on("pageshow", gsHomePage_show);
     $("#gsAddWorkPage").on("pageshow", gsAddWorkPage_show);
@@ -52,6 +56,7 @@ function init() {
     $("#gsBtnDeleteEdit").on("click", gsBtnDeleteEdit_click);
     $("#gsBtnUpdateEdit").on("click", gsBtnUpdateEdit_click);
     $("#gsOrgzListPage").on("pageshow", gsOrgzListPage_show);
+    $("#gsOrgzWorkListPage").on("pageshow", gsOrgzWorkListPage_show);
 }
 
 function initDB() {

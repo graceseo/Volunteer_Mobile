@@ -65,16 +65,21 @@ function gsGetWorkList() {
         lv.listview("refresh");  //very important
 
         function clickHandler() {
-            localStorage.setItem("id", $(this).attr("data-row-id") );
+            window.localStorage.removeItem("id");
+            window.localStorage.setItem("id", $(this).attr("data-row-id") );
 
             $(location).prop('href', '#gsEditWorkPage');
         }
 
-        $("#gsWorkList").on("click", clickHandler);
+        $("#gsWorkList a").on("click", clickHandler);
 
     }
     works.selectAll(options, callback);
 }
+
+/*
+*Get list of categories
+ */
 function gsGetCategory(para) {
     var options = [];
     var parameter=para;
@@ -82,7 +87,6 @@ function gsGetCategory(para) {
     function callback(tx, results) {
         var htmlCode="";
 
-        console.info("!!!!!!!!"+para);
         for (var i = 0; i < results.rows.length; i++) {
 
             var row = results.rows[i];
@@ -108,8 +112,9 @@ function gsGetCategory(para) {
     }
     Category.selectAll(options, callback);
 }
+
 function getShowCurrentWork() {
-    var id=localStorage.getItem("id");
+    var id=window.localStorage.getItem("id");
     var options=[id];
 
     function callback(tx, results) {
@@ -127,8 +132,9 @@ function getShowCurrentWork() {
     }
     works.select(options,callback);
 }
+
 function gsDeleteWork() {
-    var id=localStorage.getItem("id");
+    var id=window.localStorage.getItem("id");
     var opt=[id];
 
     function success() {
@@ -138,7 +144,7 @@ function gsDeleteWork() {
 }
 
 function gsUpdateWork(){
-    var id=localStorage.getItem("id");
+    var id=window.localStorage.getItem("id");
     //1.test validation
     if(gsDoValidate_gsFrmAddWork()){
         console.info("Validation is successful");
@@ -175,6 +181,7 @@ function gsUpdateWork(){
         console.error("Adding Work failed");
     }
 }
+
 function gsGetOrganizationList() {
     var options=[];
 
@@ -182,9 +189,9 @@ function gsGetOrganizationList() {
         var htmlCode="";
 
         for(var i=0; i<results.rows.length; i++){
-            console.info("!!!!!!!!!!!!!!!!!!"+results.rows.length);
             var row=results.rows[i];
-            htmlCode += "<li><a data-role='button' data-row-id=" +row['work_id']+ " href='#'>"+
+            htmlCode += "<li><a data-role='button' href='#'>"+
+                "<input type='hidden' id='orgzName' name='orgzName' value='"+row['orgz_name']+"'>"+
                 "<h2>"+row['orgz_name']+"</h2>"+
                 "<p><b>Address: </b>: "+row['address']+"<br/>"+
                 "<b>Number of you work</b>: "+row['work_count']+"<br/></p></a></li>";
@@ -196,13 +203,49 @@ function gsGetOrganizationList() {
         lv.listview("refresh");  //very important
 
         function clickHandler() {
-            localStorage.setItem("id", $(this).attr("data-row-id") );
+            window.localStorage.setItem("orgzName", $("#orgzName").val());
+
+            $(location).prop('href', '#gsOrgzWorkListPage');
+        }
+
+        $("#gsOrgzList a").on("click", clickHandler);
+
+    }
+    organization.selectAllwithWorkCount(options, callback);
+}
+
+function gsGetOrgzWorkList() {
+    var orgzName=window.localStorage.getItem("orgzName");
+    var options=[orgzName];
+
+    function callback(tx, results) {
+        var htmlCode="";
+
+        for(var i=0; i<results.rows.length; i++){
+            var row=results.rows[i];
+            htmlCode += "<li><a data-role='button' data-row-id=" +row['work_id']+ " href='#'>"+
+                "<img src="+row['image']+" width='100%' height='100'>"+
+                "<h2>"+row['position']+"</h2>"+
+                "<p><b>Organazation Name</b>: "+row['orgz_name']+"<br/>"+
+                "<b>Category</b>: "+row['name']+"<br/>"+
+                row['start_date']+" ~ "+
+                row['end_date']+"</p></a></li>";
+        }
+
+        var lv = $("#gsOrgzWorkList");
+
+        lv =lv.html(htmlCode);
+        lv.listview("refresh");  //very important
+
+        function clickHandler() {
+            window.localStorage.removeItem("id");
+            window.localStorage.setItem("id", $(this).attr("data-row-id") );
 
             $(location).prop('href', '#gsEditWorkPage');
         }
 
-        $("#gsOrgzList").on("click", clickHandler);
+        $("#gsOrgzWorkList a").on("click", clickHandler);
 
     }
-    organization.selectAllwithWorkCount(options, callback);
+    works.selectOrgzworkList(options, callback);
 }
