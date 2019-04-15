@@ -141,12 +141,14 @@ function gsDeleteWork() {
         alert("Work Deleted successfully");
     }
     works.delete(opt, success);
+
+    $(location).prop('href', '#gsWorkListPage');
 }
 
 function gsUpdateWork(){
     var id=window.localStorage.getItem("id");
     //1.test validation
-    if(gsDoValidate_gsFrmAddWork()){
+    if(gsDoValidate_gsFrmEditWork()){
         console.info("Validation is successful");
         //2. if validation is successful then fetch the info from input controls
         var workCategory=$("#gsEditCategoryList").val();
@@ -190,20 +192,19 @@ function gsGetOrganizationList() {
 
         for(var i=0; i<results.rows.length; i++){
             var row=results.rows[i];
-            htmlCode += "<li><a data-role='button' href='#'>"+
-                "<input type='hidden' id='orgzName' name='orgzName' value='"+row['orgz_name']+"'>"+
+            htmlCode += "<li><a data-role='button' id='"+row['orgz_name']+"' href='#'>"+
                 "<h2>"+row['orgz_name']+"</h2>"+
                 "<p><b>Address: </b>: "+row['address']+"<br/>"+
                 "<b>Number of you work</b>: "+row['work_count']+"<br/></p></a></li>";
         }
-
         var lv = $("#gsOrgzList");
 
         lv =lv.html(htmlCode);
         lv.listview("refresh");  //very important
 
         function clickHandler() {
-            window.localStorage.setItem("orgzName", $("#orgzName").val());
+            window.localStorage.removeItem("orgzName");
+            window.localStorage.setItem("orgzName",$(this).attr("id"));
 
             $(location).prop('href', '#gsOrgzWorkListPage');
         }
