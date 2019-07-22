@@ -7,7 +7,7 @@
 var db;
 
 function errorHandler(tx, error) {
-    console.error("SQL error: " + tx + " (" + error.code + ") : " + error.message);
+   console.error("SQL error: " + tx + " (" + error.code + ") : " + error.message);
 }
 
 /**
@@ -34,45 +34,54 @@ function gsCreateTables() {
     function txFunction(tx) {
         var options=[];
 
-        //drop 'type' table if it exists
-        var dropTypeSql="DROP TABLE IF EXISTS type; ";
-        var dropTypeMessage="'type' table dropped successfully";
+        var dropCategorySql="DROP TABLE IF EXISTS category; ";
+        var dropCategoryMessage="'category' table dropped successfully";
+        tx.executeSql(dropCategorySql, options, successExecute(dropCategoryMessage), errorHandler);
 
-        tx.executeSql(dropTypeSql, options, successExecute(dropTypeMessage), errorHandler);
+        var createCategorySql="CREATE TABLE category("+
+                "category_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"+
+                "name VARCHAR(20)," +
+                "image VARCHAR(20)"+
+                ");";
+        var creatCategoryMessage="'Category' table created successfully";
 
-        //create 'type' table
-        var createTypeSql="CREATE TABLE IF NOT EXISTS type("+
-            "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"+
-            "name VARCHAR(20) not null);";
-        var creatTypeMessage="'type' table created successfully";
+        tx.executeSql(createCategorySql, options, successExecute(creatCategoryMessage), errorHandler);
 
-        tx.executeSql(createTypeSql, options, successExecute(creatTypeMessage), errorHandler);
-
-        //insert 3 records to 'type' table
-        var insertSql=["INSERT INTO type (name) VALUES('Canadian')",
-                        "INSERT INTO type (name) VALUES('Asian')",
-                        "INSERT INTO type (name) VALUES('Others')"];
+        var insertSql=["INSERT INTO Category (name, image) VALUES('Animals','img/animal.png')",
+                        "INSERT INTO Category (name, image) VALUES('Children','img/children.png')",
+                        "INSERT INTO Category (name, image) VALUES('Food','img/food.png')",
+                        "INSERT INTO Category (name, image) VALUES('Arts','img/arts.png')",
+                        "INSERT INTO Category (name, image) VALUES('Drive','img/car.png')",
+                        "INSERT INTO Category (name, image) VALUES('Technology','img/technology.png')"];
 
         for(var i=0; i<insertSql.length; i++){
             tx.executeSql(insertSql[i], options, successExecute("execute sql : " + insertSql[i]), errorHandler);
         }
 
-        //create 'review' table
-        var creatReviewSql="CREATE TABLE IF NOT EXISTS review( " +
-            "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-            "businessName VARCHAR(30) NOT NULL," +
-            "typeId INTEGER NOT NULL," +
-            "reviewerEmail VARCHAR(30)," +
-            "reviewerComments TEXT," +
-            "reviewDate DATE," +
-            "hasRating VARCHAR(1)," +
-            "rating1 INTEGER," +
-            "rating2 INTEGER," +
-            "rating3 INTEGER," +
-            "FOREIGN KEY(typeId) REFERENCES type(id));";
-        var createReviewMessage="'review' table created successfully";
+        var creatOrganizationSql="CREATE TABLE IF NOT EXISTS organization(" +
+            "orgz_name VARCHAR(50) NOT NULL," +
+            "contact_full_name VARCHAR(20) NOT NULL,"+
+            "contact_phone VARCHAR(20) NOT NULL,"+
+            "address VARCHAR(100)," +
+            "PRIMARY KEY(orgz_name)"+
+            ");";
+        var createOrganizationMessage="'Organization' table created successfully";
 
-        tx.executeSql(creatReviewSql, options, successExecute(createReviewMessage), errorHandler);
+        tx.executeSql(creatOrganizationSql, options, successExecute(createOrganizationMessage), errorHandler);
+
+        var creatPositionSql="CREATE TABLE IF NOT EXISTS works("+
+            "work_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"+
+            "orgz_name VARCHAR(50) NOT NULL,"+
+            "category_id INTEGER NOT NULL,"+
+            "position varchar(30),"+
+            "start_date DATE NOT NULL,"+
+            "end_date DATE NOT NULL,"+
+            "FOREIGN KEY(orgz_name) REFERENCES organization(orgz_name),"+
+            "FOREIGN KEY(category_id) REFERENCES category(category_id));";
+
+        var createPositionMessage="'org_position' table created successfully";
+
+        tx.executeSql(creatPositionSql, options, successExecute(createPositionMessage), errorHandler);
 
         /**
          * this function shows all message on console
@@ -84,31 +93,6 @@ function gsCreateTables() {
     }
     function successTransaction() {
         console.info("Create tables transaction successful");
-    }
-    db.transaction(txFunction, errorHandler, successTransaction );
-}
-
-function gsDropTables() {
-    function txFunction(tx) {
-
-        var options=[];
-
-        var dropReviewSql="DROP TABLE review;";
-        var dropReviewMessage="'review' table dropped successfully";
-
-        tx.executeSql(dropReviewSql, options, successDropTables(dropReviewMessage), errorHandler);
-
-        var dropTypeSql="DROP TABLE type;";
-        var dropTypeMessage="'type' table dropped successfully";
-
-        tx.executeSql(dropTypeSql, options, successDropTables(dropTypeMessage), errorHandler);
-
-        function successDropTables(successMessage) {
-            console.info(successMessage);
-        }
-    }
-    function successTransaction() {
-        console.info("Drop tables transaction successful");
     }
     db.transaction(txFunction, errorHandler, successTransaction );
 }

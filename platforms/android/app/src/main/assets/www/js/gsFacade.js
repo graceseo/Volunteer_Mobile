@@ -5,147 +5,44 @@
  *        Gyeonglim Seo, 2019-04-11 : Created
  */
 
-/**
- * Control showing of gsRatings as Div for Add a Feedback page
- */
-function gsShowHideRatingsAdd() {
-    if($("#gsCheckRatingAdd").prop("checked")){
-        $("#gsRatingsAdd").show();
-    }else{
-        $("#gsRatingsAdd").hide();
-    }
-}
-
-/**
- * Control showing of gsRatings as Div for Modify Feedback page
- */
-function gsShowHideRatingsModify() {
-    if($("#gsCheckRatingModify").prop("checked")){
-        $("#gsRatingsModify").show();
-    }else{
-        $("#gsRatingsModify").hide();
-    }
-}
-/**
- * Input a overall rating received from a function for Add a feedback page
- */
-function gsCalculateRatingAdd() {
-    var quality =Number($("#gsFoodQualityAdd").val());
-    var value=Number($("#gsValueAdd").val());
-    var service=Number($("#gsServiceAdd").val());
-
-    var overallRating=getOverallRating(quality,value,service);
-
-    $("#gsOverallRatingsAdd").val(overallRating+"%");
-}
-/**
- * Input a overall rating received from a function for modify feedb ack page
- */
-function gsCalculateRatingModify() {
-    var quality =Number($("#gsFoodQualityModify").val());
-    var value=Number($("#gsValueModify").val());
-    var service=Number($("#gsServiceModify").val());
-
-    var overallRating=getOverallRating(quality,value,service);
-
-    $("#gsOverallRatingsModify").val(overallRating+"%");
-}
-
-function gsSaveDefaultsReviewerEmail(){
-    gsAddToStorage();
-}
-
-function gsClearDatabase() {
-    var result=confirm("Really want to clear database?");
-    if(result){
-        try{
-            gsDropTables();
-            alert("Database Cleared!");
-        }catch(e){
-            alert(e);
-        }
-    }
-}
-
-function gsLoadDefaultEmail() {
-    var defaultEmail=localStorage.getItem("DefaultEmail");
-    $("#gsReviewerEmailAdd").val(defaultEmail);
-}
-
-/**
- * If Add review page call this function, default type will be 'others'
- * however, modify review page call this function, the chosen type will show
- */
-
-function gsUpdateTypesDropdown(para) {
-    var options = [];
-    var parameter=para;
-
-    function callback(tx, results) {
-        var htmlCode="";
-
-        for (var i = 0; i < results.rows.length; i++) {
-            var row = results.rows[i];
-            var selected="";
-            if(parameter!=null){
-                if(row['id']===para){
-                    selected="selected";
-                }
-            }else{
-                if(row['name']==="Others"){
-                    selected="selected";
-                }
-            }
-            htmlCode +="<option value="+row['id']+" "+selected+">"+row['name']+"</option>";
-        }
-
-        if(parameter!=null){
-            var sv=$("#gsTypeModify");
-        }else{
-            var sv = $("#gsTypeAdd");
-        }
-        sv =sv.html(htmlCode);
-        sv.selectmenu("refresh");
-    }
-    Type.selectAll(options, callback);
-}
-
-function gsAddFeedback() {
+function gsAddWork() {
     //1.test validation
-    if(gsDoValidate_gsFrmAddReview()){
+    if(gsDoValidate_gsFrmAddWork()){
         console.info("Validation is successful");
-        //2. if validation is successful then fetch the info from input controls
-        var businessName = $("#gsBusinessNameAdd").val();
-        var typeId=$("#gsTypeAdd").val();
-        var reviewerEmail=$("#gsReviewerEmailAdd").val();
-        var reviewerComments=$("#gsReviewerCommentAdd").val();
-        var reviewDate=$("#gsReviewDateAdd").val();
-        var hasRating=$("#gsCheckRatingAdd").prop("checked");
-        var rating1=$("#gsFoodQualityAdd").val();
-        var rating2=$("#gsServiceAdd").val();
-        var rating3=$("#gsValueAdd").val();
-        var opt;
 
-        //3. only your ratings' checkbox is checked, rating1/rating2/rating3 is included
-        if(hasRating){
-            opt = [businessName, typeId, reviewerEmail,reviewerComments,reviewDate,hasRating,rating1,rating2,rating3];
-        }else{
-            opt=[businessName, typeId, reviewerEmail, reviewerComments,reviewDate,hasRating,null,null,null];
+        var workCategory=$("#gsAddCategoryList").val();
+        var orgzName=$("#gsWorkOrgzNameAdd").val();
+        var contactName=$("#gsWorkOrgzContectNameAdd").val();
+        var contactPhone=$("#gsWorkOrgzContectPhoneAdd").val();
+        var contactAddress=$("#gsWorkOrgzContectAddressAdd").val();
+        var workPostion=$("#gsWorkPositionAdd").val();
+        var workStart=$("#gsWorkStartDateAdd").val();
+        var workEnd=$("#gsWorkEndDateAdd").val();
+
+         var opt;
+         opt = [orgzName, contactName, contactPhone, contactAddress];
+
+         function success() {
+             console.info("Record inserted successfully into organization table");
+         }
+         organization.insert(opt, success);
+
+         var option;
+         option=[orgzName,workCategory,workPostion,workStart,workEnd];
+
+         function workSuccess() {
+            console.info("Record inserted successfully into works table");
+            alert("New work added");
         }
-        function success() {
-            console.info("Record inserted successfully");
-            alert("New Feedback Added");
-        }
-        //4. insert into table (by calling insert DAL function and supplying the inputs
-        Review.insert(opt, success);
 
-
+        works.insert(option, workSuccess);
+        $(location).prop('href', '#gsWorkListPage');
     }else{
-        console.error("Adding Review failed");
+        console.error("Adding Work failed");
     }
 }
 
-function gsGetReviews() {
+function gsGetWorkList() {
     var options=[];
 
     function callback(tx, results) {
@@ -153,116 +50,201 @@ function gsGetReviews() {
 
         for(var i=0; i<results.rows.length; i++){
             var row=results.rows[i];
-            var overollRating=0;
-
-            //Only if the 'hasRating' field is true, ovarollaRating will be calculated
-            if(row['hasRating']){
-                //call a function for calculating
-                overollRating=getOverallRating(row['rating1'],row['rating2'],row['rating3']);
-            }
-            htmlCode += "<li><a data-role='button' data-row-id=" + row['id'] + " href='#'>"+
-                "<h2>Business Name: "+row['businessName']+"</h2>"+
-                "<p>Reviewer Email: "+row['reviewerEmail']+"<br>"+
-                "Comments: "+row['reviewerComments']+"<br>"+
-                "Overall Rating: "+overollRating+"</p></a></li>";
+            htmlCode += "<li><a data-role='button' data-row-id=" +row['work_id']+ " href='#'>"+
+                "<img src="+row['image']+" width='100%' height='100'>"+
+                "<h2>"+row['position']+"</h2>"+
+                "<p><b>Organazation Name</b>: "+row['orgz_name']+"<br/>"+
+                 "<b>Category</b>: "+row['name']+"<br/>"+
+                 row['start_date']+" ~ "+
+                 row['end_date']+"</p></a></li>";
         }
 
-        var lv = $("#gsFeedbackList");
+        var lv = $("#gsWorkList");
 
         lv =lv.html(htmlCode);
         lv.listview("refresh");  //very important
 
         function clickHandler() {
-            localStorage.setItem("id", $(this).attr("data-row-id") );
+            window.localStorage.removeItem("id");
+            window.localStorage.setItem("id", $(this).attr("data-row-id") );
 
-            $(location).prop('href', '#gsEditFeedbackPage');
+            $(location).prop('href', '#gsEditWorkPage');
         }
 
-        $("#gsFeedbackList a").on("click", clickHandler);
+        $("#gsWorkList a").on("click", clickHandler);
 
     }
-
-    Review.selectAll(options, callback);
+    works.selectAll(options, callback);
 }
 
-function gsShowCurrentReview() {
-    var id=localStorage.getItem("id");
+/*
+*Get list of categories
+ */
+function gsGetCategory(para) {
+    var options = [];
+    var parameter=para;
+
+    function callback(tx, results) {
+        var htmlCode="";
+
+        for (var i = 0; i < results.rows.length; i++) {
+
+            var row = results.rows[i];
+            var selected="";
+            if(parameter!=null){
+                if(row['category_id']===parameter){
+                    selected="selected";
+                }
+            }else{
+                if(row['name']==="Animals"){
+                    selected="selected";
+                }
+            }
+            htmlCode +="<option value="+row['category_id']+" "+selected+">"+row['name']+"</option>";
+        }
+        if(parameter!=null){
+            var sv=$("#gsEditCategoryList");
+        }else{
+            var sv=$("#gsAddCategoryList");
+        }
+        sv =sv.html(htmlCode);
+        sv.selectmenu("refresh")
+    }
+    Category.selectAll(options, callback);
+}
+
+function getShowCurrentWork() {
+    var id=window.localStorage.getItem("id");
     var options=[id];
 
     function callback(tx, results) {
         var row=results.rows[0];
-        var overollRating=0;
 
-        $("#gsBusinessNameModify").val(row['businessName']);
-        //$("#gsTypeAdd").val(row['typeId']);
-        $("#gsReviewerEmailModify").val(row['reviewerEmail']);
-        $("#gsReviewerCommentModify").val(row['reviewerComments']);
-        $("#gsReviewDateModify").val(row['reviewDate']);
+        $("#gsWorkOrgzNameEdit").val(row['orgz_name']);
+        $("#gsWorkOrgzContectNameEdit").val(row['contact_full_name']);
+        $("#gsWorkOrgzContectPhoneEdit").val(row['contact_phone']);
+        $("#gsWorkOrgzContectAddressEdit").val(row['address']);
+        $("#gsWorkPositionEdit").val(row['position']);
+        $("#gsWorkStartDateEdit").val(row['start_date']);
+        $("#gsWorkEndDateEdit").val(row['end_date']);
 
-        if (row['hasRating'] === 'true') {
-            overollRating=getOverallRating(row['rating1'],row['rating2'],row['rating3']);
-
-            $("#gsCheckRatingModify").prop("checked",true);
-
-            $("#gsRatingsModify").show();
-
-            $("#gsFoodQualityModify").val(row['rating1']);
-            $("#gsServiceModify").val(row['rating2']);
-            $("#gsValueModify").val(row['rating3']);
-            $("#gsOverallRatingsModify").val(overollRating);
-        }
-        else{
-            $("#gsRatingsModify").hide();
-            $("#gsCheckRatingModify").prop("checked",false);
-        }
-        gsUpdateTypesDropdown(row['typeId']);
-        $("#gsFrmModifyReview :checkbox").checkboxradio("refresh");
+        gsGetCategory(row['category_id']);
     }
-    Review.select(options,callback);
+    works.select(options,callback);
 }
 
-function gsUpdateFeedback(){
-    var id=localStorage.getItem("id");
-    if(gsDoValidate_gsFrmModifyReview()){
-        console.info("Update Validation is successful");
-        //2. if validation is successful then fetch the info from input controls
-        var businessName = $("#gsBusinessNameModify").val();
-        var typeId=$("#gsTypeModify").val();
-        var reviewerEmail=$("#gsReviewerEmailModify").val();
-        var reviewerComments=$("#gsReviewerCommentModify").val();
-        var reviewDate=$("#gsReviewDateModify").val();
-        var hasRating=$("#gsCheckRatingModify").prop("checked");
-        var rating1=$("#gsFoodQualityModify").val();
-        var rating2=$("#gsServiceModify").val();
-        var rating3=$("#gsValueModify").val();
-        var opt;
-
-        //3. only your ratings' checkbox is checked, rating1/rating2/rating3 is included
-        if(hasRating){
-            opt = [businessName, typeId, reviewerEmail,reviewerComments,reviewDate,hasRating,rating1,rating2,rating3,id];
-        }else{
-            opt=[businessName, typeId, reviewerEmail, reviewerComments,reviewDate,hasRating,null,null,null,id];
-        }
-        function success() {
-             alert("Feedback updated successfully");
-
-            $(location).prop('href', '#gsVeiwFeedbackPage');
-        }
-        //4. insert into table (by calling insert DAL function and supplying the inputs
-        Review.update(opt, success);
-
-    }else{
-        console.error("Update review failed");
-    }
-}
-
-function gsDeleteFeddback() {
-    var id=localStorage.getItem("id");
+function gsDeleteWork() {
+    var id=window.localStorage.getItem("id");
     var opt=[id];
 
     function success() {
-        alert("Feedback Deleted successfully");
-        $(location).prop('href', '#gsVeiwFeedbackPage');
+        alert("Work Deleted successfully");
     }
-    Review.delete(opt, success);
+    works.delete(opt, success);
+}
+
+function gsUpdateWork(){
+    var id=window.localStorage.getItem("id");
+    //1.test validation
+    if(gsDoValidate_gsFrmAddWork()){
+        console.info("Validation is successful");
+        //2. if validation is successful then fetch the info from input controls
+        var workCategory=$("#gsEditCategoryList").val();
+        var orgzName=$("#gsWorkOrgzNameEdit").val();
+        var contactName=$("#gsWorkOrgzContectNameEdit").val();
+        var contactPhone=$("#gsWorkOrgzContectPhoneEdit").val();
+        var contactAddress=$("#gsWorkOrgzContectAddressEdit").val();
+        var workPostion=$("#gsWorkPositionEdit").val();
+        var workStart=$("#gsWorkStartDateEdit").val();
+        var workEnd=$("#gsWorkEndDateEdit").val();
+
+        var opt;
+        opt = [orgzName, contactName, contactPhone, contactAddress];
+
+        function success() {
+            console.info("Record Updated successfully into organization table");
+        }
+        // 'organization table can be replaced(or duplication key update), so dont' need update
+        organization.insert(opt, success);
+
+        var option;
+        option=[orgzName,workCategory,workPostion,workStart,workEnd, id];
+
+        function workSuccess() {
+            console.info("Record Updated successfully into works table");
+        }
+
+        works.update(option, workSuccess);
+
+        $(location).prop('href', '#gsWorkListPage');
+    }else{
+        console.error("Adding Work failed");
+    }
+}
+
+function gsGetOrganizationList() {
+    var options=[];
+
+    function callback(tx, results) {
+        var htmlCode="";
+
+        for(var i=0; i<results.rows.length; i++){
+            var row=results.rows[i];
+            htmlCode += "<li><a data-role='button' data-row-id=" +row['orgz_name']+ " href='#'>"+
+                "<h2>"+row['orgz_name']+"</h2>"+
+                "<p><b>Address: </b>: "+row['address']+"<br/>"+
+                "<b>Number of you work</b>: "+row['work_count']+"<br/></p></a></li>";
+        }
+
+        var lv = $("#gsOrgzList");
+
+        lv =lv.html(htmlCode);
+        lv.listview("refresh");  //very important
+
+        function clickHandler() {
+            window.localStorage.setItem("orgzName", $(this).attr("data-row-id") );
+
+            $(location).prop('href', '#gsOrgzWorkListPage');
+        }
+
+        $("#gsOrgzList a").on("click", clickHandler);
+
+    }
+    organization.selectAllwithWorkCount(options, callback);
+}
+
+function gsGetOrgzWorkList() {
+    var orgzName=window.localStorage.getItem("orgzName");
+    var options=[orgzName];
+
+    function callback(tx, results) {
+        var htmlCode="";
+
+        for(var i=0; i<results.rows.length; i++){
+            var row=results.rows[i];
+            htmlCode += "<li><a data-role='button' data-row-id=" +row['work_id']+ " href='#'>"+
+                "<img src="+row['image']+" width='100%' height='100'>"+
+                "<h2>"+row['position']+"</h2>"+
+                "<p><b>Organazation Name</b>: "+row['orgz_name']+"<br/>"+
+                "<b>Category</b>: "+row['name']+"<br/>"+
+                row['start_date']+" ~ "+
+                row['end_date']+"</p></a></li>";
+        }
+
+        var lv = $("#gsOrgzWorkList");
+
+        lv =lv.html(htmlCode);
+        lv.listview("refresh");  //very important
+
+        function clickHandler() {
+            window.localStorage.removeItem("id");
+            window.localStorage.setItem("id", $(this).attr("data-row-id") );
+
+            $(location).prop('href', '#gsEditWorkPage');
+        }
+
+        $("#gsOrgzWorkList a").on("click", clickHandler);
+
+    }
+    works.selectOrgzworkList(options, callback);
 }

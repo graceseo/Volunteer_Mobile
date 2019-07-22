@@ -7,7 +7,7 @@
 var db;
 
 function errorHandler(tx, error) {
-    console.error("SQL error: " + tx + " (" + error.code + ") : " + error.message);
+   console.error("SQL error: " + tx + " (" + error.code + ") : " + error.message);
 }
 
 /**
@@ -51,46 +51,33 @@ function gsCreateTables() {
                         "INSERT INTO Category (name, image) VALUES('Children','img/children.png')",
                         "INSERT INTO Category (name, image) VALUES('Food','img/food.png')",
                         "INSERT INTO Category (name, image) VALUES('Arts','img/arts.png')",
-                        "INSERT INTO Category (name, image) VALUES('Driver','img/car.png')",
+                        "INSERT INTO Category (name, image) VALUES('Drive','img/car.png')",
                         "INSERT INTO Category (name, image) VALUES('Technology','img/technology.png')"];
 
         for(var i=0; i<insertSql.length; i++){
             tx.executeSql(insertSql[i], options, successExecute("execute sql : " + insertSql[i]), errorHandler);
         }
 
-        var creatVolunteerSql="CREATE TABLE IF NOT EXISTS volunteer("+
-            "volunteer_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"+
-            "first_name VARCHAR(20) NOT NULL,"+
-            "last_name VARCHAR(20) NOT NULL,"+
-            "phone VARCHAR(10) NOT NULL,"+
-            "email VARCHAR(30)"+
-            ");";
-        var createVolunteerMessage="'Volunteer' table created successfully";
-
-        tx.executeSql(creatVolunteerSql, options, successExecute(createVolunteerMessage), errorHandler);
-
         var creatOrganizationSql="CREATE TABLE IF NOT EXISTS organization(" +
-            "orgz_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
             "orgz_name VARCHAR(50) NOT NULL," +
-            "contact_first_name VARCHAR(20) NOT NULL,"+
-            "contact_last_name VARCHAR(20) NOT NULL,"+
-            "contact_phone VARCHAR(10) NOT NULL,"+
-            "address VARCHAR(100)" +
+            "contact_full_name VARCHAR(20) NOT NULL,"+
+            "contact_phone VARCHAR(20) NOT NULL,"+
+            "address VARCHAR(100)," +
+            "PRIMARY KEY(orgz_name)"+
             ");";
         var createOrganizationMessage="'Organization' table created successfully";
 
         tx.executeSql(creatOrganizationSql, options, successExecute(createOrganizationMessage), errorHandler);
 
-        var creatPositionSql="CREATE TABLE IF NOT EXISTS org_position("+
-            "orgz_id INTEGER NOT NULL,"+
+        var creatPositionSql="CREATE TABLE IF NOT EXISTS works("+
+            "work_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"+
+            "orgz_name VARCHAR(50) NOT NULL,"+
             "category_id INTEGER NOT NULL,"+
             "position varchar(30),"+
             "start_date DATE NOT NULL,"+
             "end_date DATE NOT NULL,"+
-            "description VARCHAR(300) NOT NULL,"+
-            "FOREIGN KEY(orgz_id) REFERENCES organization(orgz_id),"+
-            "FOREIGN KEY(category_id) REFERENCES category(category_id),"+
-            "PRIMARY KEY(orgz_id,category_id,position));";
+            "FOREIGN KEY(orgz_name) REFERENCES organization(orgz_name),"+
+            "FOREIGN KEY(category_id) REFERENCES category(category_id));";
 
         var createPositionMessage="'org_position' table created successfully";
 

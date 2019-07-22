@@ -6,169 +6,165 @@
  */
 
 /**
- * Return the overall rating calculated
- */
-function getOverallRating(quality,service,value) {
-
-    var overallRating=Math.round((quality+service+value)*100/15);
-
-    return overallRating;
-}
-
-/**
- * Save the default reviewer email to local storage
- */
-function gsAddToStorage(){
-    if (localStorage.getItem("DefaultEmail"))
-    {
-        localStorage.removeItem("DefaultEmail");
-    }
-    localStorage.setItem("DefaultEmail", $("#gsDefaultReviewerEmail").val());
-    alert("Default reviewer email saved");
-}
-
-/**
  * Check validation for Adding a review
  * @returns {*|jQuery|boolean}
  */
-function gsDoValidate_gsFrmAddReview() {
-    var form=$("#gsFrmAddReview");
+function gsDoValidate_gsFrmAddWork() {
+    var form=$("#gsFrmAddWork");
     form.validate({
         rules:{
-            gsBusinessNameAdd:{
+            gsWorkOrgzNameAdd:{
                 required: true,
                 minlength:2,
-                maxlength: 20
+                maxlength:50
             },
-            gsReviewerEmailAdd:{
+            gsWorkOrgzContectNameAdd:{
                 required: true,
-                conestogaEmailcheck:true,
-                emailCheck:true
+                minlength:2,
+                maxlength:20
             },
-            gsReviewDateAdd:{
+            gsWorkOrgzContectPhoneAdd:{
+                required:true,
+                minlength:2,
+                maxlength:20
+            },
+            gsWorkOrgzContectAddressAdd:{
+                required:true,
+                minlength:2,
+                maxlength:100
+            },
+            gsWorkPositionAdd:{
+                required:true,
+                minlength:2,
+                maxlength:30
+            },
+            gsWorkStartDateAdd:{
                 required:true
             },
-            gsFoodQualityAdd:{
-                min:0,
-                max:5
-            },
-            gsServiceAdd:{
-                min:0,
-                max:5
-            },
-            gsValueAdd:{
-                min:0,
-                max:5
+            gsWorkEndDateAdd:{
+                required:true,
+                dateCheck: true
             }
         },
         messages:{
-            gsBusinessNameAdd:{
-                required: "Business Name is required",
+            gsWorkOrgzNameAdd:{
+                required: "Organization name is required",
+                minlength:"Length must be 2-50 characters long",
+                maxlength:"Length must be 2-50 characters long"
+            },
+            gsWorkOrgzContectNameAdd:{
+                required: "Contect name is required",
                 minlength:"Length must be 2-20 characters long",
                 maxlength:"Length must be 2-20 characters long"
             },
-            gsReviewerEmailAdd:{
-                required: "Email is required",
-                conestogaEmailcheck:"Email must be a conestoga email",
-                emailCheck: "Email is not valid"
+            gsWorkOrgzContectPhoneAdd:{
+                required:"Contect Phone number is required",
+                minlength:"Length must be 2-20 characters long",
+                maxlength:"Length must be 2-20 characters long"
             },
-            gsReviewDateAdd:{
-                required:"Review data is required"
+            gsWorkOrgzContectAddressAdd:{
+                required:"Contect address is required",
+                minlength:"Length must be 2-100 characters long",
+                maxlength:"Length must be 2-100 characters long"
             },
-            gsFoodQualityAdd:{
-                min:"Value must be 0-5",
-                max:"Value must be 0-5"
+            gsWorkPositionAdd:{
+                required:"Contect address is required",
+                minlength:"Length must be 2-30 characters long",
+                maxlength:"Length must be 2-30 characters long"
             },
-            gsServiceAdd:{
-                min:"Value must be 0-5",
-                max:"Value must be 0-5"
+            gsWorkStartDateAdd:{
+                required:"Start date is required"
             },
-            gsValueAdd:{
-                min:"Value must be 0-5",
-                max:"Value must be 0-5"
+            gsWorkEndDateAdd:{
+                required:"End data is requried",
+                dateCheck:"The end date should be more future than the start date"
             }
         }
     });
-
     return form.valid();
 }
 
-/**
- * Check validation for Modifying a review
- * @returns {*|jQuery|boolean}
- */
-function gsDoValidate_gsFrmModifyReview() {
-    var form=$("#gsFrmModifyReview");
+function gsDoValidate_gsFrmEditWork() {
+    var form=$("#gsFrmEditWork");
     form.validate({
         rules:{
-            gsBusinessNameModify:{
+            gsWorkOrgzNameEdit:{
                 required: true,
                 minlength:2,
-                maxlength: 20
+                maxlength:50
             },
-            gsReviewerEmailModify:{
+            gsWorkOrgzContectNameEdit:{
                 required: true,
-                conestogaEmailcheck:true,
-                emailCheck:true
+                minlength:2,
+                maxlength:20
             },
-            gsReviewDateModify:{
+            gsWorkOrgzContectPhoneEdit:{
+                required:true,
+                minlength:2,
+                maxlength:20
+            },
+            gsWorkOrgzContectAddressEdit:{
+                required:true,
+                minlength:2,
+                maxlength:100
+            },
+            gsWorkPositionEdit:{
+                required:true,
+                minlength:2,
+                maxlength:30
+            },
+            gsWorkStartDateEdit:{
                 required:true
             },
-            gsFoodQualityModify:{
-                min:0,
-                max:5
-            },
-            gsServiceModify:{
-                min:0,
-                max:5
-            },
-            gsValueModify:{
-                min:0,
-                max:5
+            gsWorkEndDateEdit:{
+                required:true,
+                dateEditCheck: true
             }
         },
         messages:{
-            gsBusinessNameModify:{
-                required: "Business Name is required",
+            gsWorkOrgzNameEdit:{
+                required: "Organization name is required",
+                minlength:"Length must be 2-50 characters long",
+                maxlength:"Length must be 2-50 characters long"
+            },
+            gsWorkOrgzContectNameEdit:{
+                required: "Contect name is required",
                 minlength:"Length must be 2-20 characters long",
                 maxlength:"Length must be 2-20 characters long"
             },
-            gsReviewerEmailModify:{
-                required: "Email is required",
-                conestogaEmailcheck:"Email must be a conestoga email",
-                emailCheck: "Email is not valid"
+            gsWorkOrgzContectPhoneEdit:{
+                required:"Contect Phone number is required",
+                minlength:"Length must be 2-20 characters long",
+                maxlength:"Length must be 2-20 characters long"
             },
-            gsReviewDateModify:{
-                required:"Review data is required"
+            gsWorkOrgzContectAddressEdit:{
+                required:"Contect address is required",
+                minlength:"Length must be 2-100 characters long",
+                maxlength:"Length must be 2-100 characters long"
             },
-            gsFoodQualityModify:{
-                min:"Value must be 0-5",
-                max:"Value must be 0-5"
+            gsWorkPositionEdit:{
+                required:"Contect address is required",
+                minlength:"Length must be 2-30 characters long",
+                maxlength:"Length must be 2-30 characters long"
             },
-            gsServiceModify:{
-                min:"Value must be 0-5",
-                max:"Value must be 0-5"
+            gsWorkStartDateEdit:{
+                required:"Start date is required"
             },
-            gsValueModify:{
-                min:"Value must be 0-5",
-                max:"Value must be 0-5"
+            gsWorkEndDateEdit:{
+                required:"End data is requried",
+                dateCheck:"The end date should be more future than the start date"
             }
         }
     });
-
     return form.valid();
 }
-
-jQuery.validator.addMethod("conestogaEmailcheck",
+ jQuery.validator.addMethod("dateCheck",
+     function (value, element) {
+         var startDateValue = $("#gsWorkStartDateAdd").val();
+         return Date.parse(startDateValue) < Date.parse(value);
+}, "Custom date checker");
+jQuery.validator.addMethod("dateEditCheck",
     function (value, element) {
-        var regex=/^.+conestogac.on.ca$/;
-
-        return this.optional(element) || regex.test(value);
-    }, "Custom email checker");
-
-jQuery.validator.addMethod("emailCheck",
-    function (value, element) {
-        var regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-        return this.optional(element) || regex.test(value);
-    }, "Custom email checker");
+        var startDateValue = $("#gsWorkStartDateEdit").val();
+        return Date.parse(startDateValue) < Date.parse(value);
+    }, "Custom date checker");
